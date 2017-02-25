@@ -1,13 +1,13 @@
 {
-  "name": "Quran",
-  "productName": "Quran",
+  "name": "Lugoh",
+  "productName": "Lugoh",
   "version": "1.0.0",
-  "description": "Quran based on Electron, React, React Router, Webpack, React Hot Loader for rapid application development",
+  "description": "Lugoh based on Electron, React, React Router, Webpack, React Hot Loader for rapid application development",
   "main": "./main.js",
   "author": {
     "name": "Muhammad Fahreza",
     "email": "muhammadfahreza@gmail.com",
-    "url": "https://github.com/ejabu/quran-tron"
+    "url": "https://github.com/ejabu/lugoh"
   },
   "license": "MIT",
   "dependencies": {

@@ -4,7 +4,11 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import styles from './VideoContent.css';
 import $ from 'jquery';
+import { toPlay, toStop } from '../../actions/playback';
 
+
+
+@connect(state => ({ playback: state.playback}),)
 export default class Content extends Component {
 
   constructor(props) {
@@ -12,11 +16,12 @@ export default class Content extends Component {
     this.state = {
       "currentTime": 0,
       "source": "E:/kursi3d.mp4",
-      "play": false
     };
-    this.intervalListener;
+    // this.intervalListener;
 
   }
+
+  static internalListener;
 
   onDrop = (event) => {
     event.stopPropagation();
@@ -37,19 +42,41 @@ export default class Content extends Component {
     return self.harusInter
   };
 
-  start = (event) => {
-    event.stopPropagation();
+  start = () => {
+
     $("video")[0].play()
-    this.setState({play: true});
+    console.log('this start ejaaaaaa');
+    console.log(this);
     this.intervalListener = this.intervalTrigger()
   }
-  stop = (event) => {
-    event.stopPropagation();
-    this.setState({play: false});
+  stop = () => {
+
     $("video")[0].pause()
     window.clearInterval(this.intervalListener);
   }
 
+  startClick = (event) => {
+    event.stopPropagation();
+    const { dispatch } = this.props;
+    toPlay(dispatch)
+  }
+  stopClick = (event) => {
+    event.stopPropagation();
+    const { dispatch } = this.props;
+    toStop(dispatch)
+  }
+
+
+
+
+  componentWillUpdate(nextProps, nextState) {
+    if (this.props.playback == "STOP" && nextProps.playback == "PLAY") {
+      this.start()
+    }
+    else if (this.props.playback == "PLAY" && nextProps.playback == "STOP") {
+      this.stop()
+    }
+  }
   render() {
     function toHHMMSS(sec_num) {
       var hours = Math.floor(sec_num / 3600);
@@ -68,8 +95,10 @@ export default class Content extends Component {
       return hours + ':' + minutes + ':' + seconds;
     }
     var timeString = toHHMMSS(this.state.currentTime)
+    console.log('reRender');
     return (
       <div className={styles.transWrapper}>
+        {this.props.playback}
         {this.state.currentTime}
         {timeString}
         <video id="myVid" src={this.state.source}>

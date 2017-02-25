@@ -6,24 +6,24 @@ import styles from './SearchBox.css';
 import { resultChanged } from '../../../actions/verseIndex';
 import { QueryParser } from './SearchEngine';
 
-var remote = require('electron').remote;
-var fs = require('fs');
-var Datastore = require('nedb');
-var app = electron.remote.app
-
-if (process.env.NODE_ENV === 'development') {
-  var exePath = app.getPath('exe')
-  var path     = require('path');
-  var hasil = path.join(exePath, "../assets/quranSearch.db")
-  var quranDB = new Datastore({ filename: 'D:/quranSearch.db', autoload: false, onload:function(error) {console.log('haha');} });
-
-} else {
-  var exePath = app.getPath('exe')
-  var path     = require('path');
-  var hasil = path.join(exePath, "../assets/quranSearch.db")
-  var quranDB = new Datastore({ filename: hasil, autoload: false, onload:function(error) {console.log('haha');} });
-
-}
+// var remote = require('electron').remote;
+// var fs = require('fs');
+// var Datastore = require('nedb');
+// var app = electron.remote.app
+//
+// if (process.env.NODE_ENV === 'development') {
+//   var exePath = app.getPath('exe')
+//   var path     = require('path');
+//   var hasil = path.join(exePath, "../assets/quranSearch.db")
+//   var quranDB = new Datastore({ filename: 'D:/quranSearch.db', autoload: false, onload:function(error) {console.log('haha');} });
+//
+// } else {
+//   var exePath = app.getPath('exe')
+//   var path     = require('path');
+//   var hasil = path.join(exePath, "../assets/quranSearch.db")
+//   var quranDB = new Datastore({ filename: hasil, autoload: false, onload:function(error) {console.log('haha');} });
+//
+// }
 
 @connect(state => ({ verseIndex: state.verseIndex , result: state.result}),)
 export default class SearchBox extends Component {
@@ -36,7 +36,7 @@ export default class SearchBox extends Component {
     };
   }
   componentDidMount(){
-    quranDB.loadDatabase();
+    // quranDB.loadDatabase();
   }
 
   handleChange(event) {
@@ -53,7 +53,7 @@ export default class SearchBox extends Component {
         }
         else{
           var neQuery = QueryParser(event.target.value)
-          quranDB.find(neQuery).sort({c:1,v:1}).exec(this.doSomething)
+          // quranDB.find(neQuery).sort({c:1,v:1}).exec(this.doSomething)
         }
       }
     }

@@ -13,10 +13,6 @@ import Content from './Content/Content';
 
 @connect(
   state => ({
-    counter: state.counter,
-    suggestions: state.suggestions,
-    translations: state.translations,
-    posts: state.posts,
     result: state.result }),
   )
 export default class Home extends Component {
