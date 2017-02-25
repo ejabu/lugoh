@@ -5,10 +5,9 @@ import { Link } from 'react-router';
 import styles from './Content.css';
 
 import keymap from './keymap'
-import { ShortcutManager } from 'react-shortcuts'
+import { ShortcutManager, Shortcuts } from 'react-shortcuts'
 
 const shortcutManager = new ShortcutManager(keymap)
-import { Shortcuts } from 'react-shortcuts'
 
 import { toPlay, toStop } from '../../actions/playback';
 
@@ -16,9 +15,7 @@ import { toPlay, toStop } from '../../actions/playback';
 export default class Content extends Component {
 
 
-  static childContextTypes = {
-    shortcuts: React.PropTypes.object.isRequired
-  }
+
 
   constructor(props) {
     super(props);
@@ -33,7 +30,9 @@ export default class Content extends Component {
   getChildContext() {
       return { shortcuts: shortcutManager }
   }
-
+  static childContextTypes = {
+    shortcuts: React.PropTypes.object.isRequired
+  }
   _handleShortcuts = (action, event) => {
     console.log('action');
     console.log(action);

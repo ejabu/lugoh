@@ -11,6 +11,14 @@ import Result from './Result/Result';
 import * as CounterActions from '../actions/counter';
 import Content from './Content/Content';
 
+
+import keymap from './keymap'
+import { ShortcutManager, Shortcuts } from 'react-shortcuts'
+
+const shortcutManager = new ShortcutManager(keymap)
+
+import { toPlay, toStop } from '../actions/playback';
+
 @connect(
   state => ({
     result: state.result }),
@@ -35,6 +43,34 @@ export default class Home extends Component {
     this.setState(toSet2);
   }
 
+  getChildContext() {
+      return { shortcuts: shortcutManager }
+  }
+  static childContextTypes = {
+    shortcuts: React.PropTypes.object.isRequired
+  }
+  _handleShortcuts = (action, event) => {
+    console.log('action');
+    console.log(action);
+    const { dispatch } = this.props;
+    console.log(event);
+      switch (action) {
+        case 'MOVE_LEFT':
+          console.log('moving left')
+          toPlay(dispatch)
+          break
+        case 'MOVE_RIGHT':
+          toStop(dispatch)
+          console.log('moving right')
+          break
+        case 'MOVE_UP':
+          console.log('moving up')
+          break
+        case 'COPY':
+          console.log('copying stuff')
+          break
+      }
+    }
 
   render() {
     var submenuStyle = {
@@ -87,6 +123,10 @@ export default class Home extends Component {
     var isResizableDict = {top:false, right:true, bottom:false, left:false, topRight:false, bottomRight:false, bottomLeft:false, topLeft:false}
     return (
       <div className={styles.container}>
+        <Shortcuts
+          name = 'App'
+          handler = {this._handleShortcuts}>
+
 
           <Resizable
           customClass="submenu"
@@ -108,6 +148,7 @@ export default class Home extends Component {
           <div style={mainContentStyle}>
             <Content query={this.state.query}/>
           </div>
+        </Shortcuts>
       </div>
 
     );

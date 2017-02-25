@@ -27,9 +27,15 @@ export default class Content extends Component {
     event.stopPropagation();
     var res2 = document.getElementById("myFile").files[0].path.replace(/\\/g, "/");
     var toSet2 = {
-      source: res2
+      source: res2,
+      "currentTime": 0,
+
     }
+    const { dispatch } = this.props;
+
+    this.stop()
     this.setState(toSet2);
+    toStop(dispatch)
   }
 
   intervalTrigger() {
@@ -103,8 +109,8 @@ export default class Content extends Component {
         {timeString}
         <video id="myVid" src={this.state.source}>
           Your browser does not support HTML5 video.</video>
-        <button onClick={this.start.bind(this)}>start</button>
-        <button onClick={this.stop.bind(this)}>pause</button>
+        <button onClick={this.startClick.bind(this)}>start</button>
+        <button onClick={this.stopClick.bind(this)}>pause</button>
         <input id="myFile" type='file' multiple ref='fileInput' onChange={this.onDrop.bind(this)}/>
       </div>
     );
