@@ -17,12 +17,7 @@ export default class Content extends Component {
       "currentTime": 0,
       "source": "E:/kursi3d.mp4",
     };
-    // this.intervalListener;
-
   }
-
-  static internalListener;
-
   onDrop = (event) => {
     event.stopPropagation();
     var res2 = document.getElementById("myFile").files[0].path.replace(/\\/g, "/");
@@ -49,18 +44,13 @@ export default class Content extends Component {
   };
 
   start = () => {
-
     $("video")[0].play()
-    console.log('this start ejaaaaaa');
-    console.log(this);
     this.intervalListener = this.intervalTrigger()
   }
   stop = () => {
-
     $("video")[0].pause()
     window.clearInterval(this.intervalListener);
   }
-
   startClick = (event) => {
     event.stopPropagation();
     const { dispatch } = this.props;
@@ -71,9 +61,6 @@ export default class Content extends Component {
     const { dispatch } = this.props;
     toStop(dispatch)
   }
-
-
-
 
   componentWillUpdate(nextProps, nextState) {
     if (this.props.playback == "STOP" && nextProps.playback == "PLAY") {
@@ -101,7 +88,6 @@ export default class Content extends Component {
       return hours + ':' + minutes + ':' + seconds;
     }
     var timeString = toHHMMSS(this.state.currentTime)
-    console.log('reRender');
     return (
       <div className={styles.transWrapper}>
         {this.props.playback}

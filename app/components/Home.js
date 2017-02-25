@@ -50,10 +50,7 @@ export default class Home extends Component {
     shortcuts: React.PropTypes.object.isRequired
   }
   _handleShortcuts = (action, event) => {
-    console.log('action');
-    console.log(action);
     const { dispatch } = this.props;
-    console.log(event);
       switch (action) {
         case 'MOVE_LEFT':
           console.log('moving left')
