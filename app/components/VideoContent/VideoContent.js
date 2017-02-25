@@ -107,11 +107,15 @@ export default class Content extends Component {
         {this.props.playback}
         {this.state.currentTime}
         {timeString}
-        <video id="myVid" src={this.state.source}>
+        <div>
+          <video id="myVid" src={this.state.source}>
           Your browser does not support HTML5 video.</video>
-        <button onClick={this.startClick.bind(this)}>start</button>
-        <button onClick={this.stopClick.bind(this)}>pause</button>
-        <input id="myFile" type='file' multiple ref='fileInput' onChange={this.onDrop.bind(this)}/>
+        </div>
+        <div>
+          <button onClick={this.startClick.bind(this)}>start</button>
+          <button onClick={this.stopClick.bind(this)}>pause</button>
+          <input id="myFile" type='file' multiple ref='fileInput' onChange={this.onDrop.bind(this)}/>
+        </div>
       </div>
     );
   }
