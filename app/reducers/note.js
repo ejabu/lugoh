@@ -16,41 +16,21 @@
 
 var productList = [
   {
-    id: 1,
-    category: 'Sporting Goods',
-    price: '49.99',
-    qty: 12,
-    name: 'football'
+    id: "1",
+    time: 10,
+    note: 'Amma',
   }, {
-    id: 2,
-    category: 'Sporting Goods',
-    price: '9.99',
-    qty: 15,
-    name: 'baseball'
+    id: "2",
+    time: 20,
+    note: 'Amma',
   }, {
-    id: 3,
-    category: 'Sporting Goods',
-    price: '29.99',
-    qty: 14,
-    name: 'basketball'
+    id: "3",
+    time: 50,
+    note: 'Amma',
   }, {
-    id: 4,
-    category: 'Electronics',
-    price: '99.99',
-    qty: 34,
-    name: 'iPod Touch'
-  }, {
-    id: 5,
-    category: 'Electronics',
-    price: '399.99',
-    qty: 12,
-    name: 'iPhone 5'
-  }, {
-    id: 6,
-    category: 'Electronics',
-    price: '199.99',
-    qty: 23,
-    name: 'nexus 7'
+    id: "4",
+    time: 70,
+    note: 'Amma',
   }
 ];
 
@@ -81,6 +61,14 @@ export function note ( state = productList, action) {
 export function filter (state = "", action) {
   if (action.type == "FILTER_TEXT") {
     return action.text;
+  } else {
+    return state;
+  }
+
+}
+export function selected (state = 0, action) {
+  if (action.type == "SELECT_ROW") {
+    return action.index;
   } else {
     return state;
   }
