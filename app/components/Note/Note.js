@@ -6,11 +6,14 @@ import styles from './Note.css';
 
 @connect(state => ({playback: state.playback, note: state.note, filter: state.filter, selected: state.selected}),)
 export default class Note extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       "source": ""
     };
+    this.focus = this.focus.bind(this);
+    this.textInput
   }
   renderRow(item, index) {
     return (
@@ -31,14 +34,19 @@ export default class Note extends Component {
     }
   }
 
+  focus() {
+    // Explicitly focus the text input using the raw DOM API
+    this.textInput.focus();
+  }
   render() {
     const {note, filter, selected, dispatch} = this.props;
+    console.log('RERENDER');
     return (
       <div className={styles.transWrapper}>
         Note Starts here {selected}
         <SearchBar filterText={filter} dispatch={dispatch}/>
 
-        <ProductTable products={note} filterText={filter} dispatch={dispatch} handleKeyDown={this.handleKeyDown}/>
+        <ProductTable selected={selected} products={note} filterText={filter} dispatch={dispatch} handleKeyDown={this.handleKeyDown}/>
       </div>
     );
   }
@@ -63,11 +71,16 @@ function ProductTable(props) {
     props.dispatch({type: 'SELECT_ROW', index: index})
   }
   var filterText = props.filterText;
-  var product = props.products.map(function(product) {
+  var product = props.products.map(function(product, index) {
     if (product.note.indexOf(filterText) === -1) {
       return;
     }
-    return (<ProductRow product={product} key={product.id} dispatch={props.dispatch} handleKeyDown={props.handleKeyDown} handleOnFocus={handleOnFocus}/>)
+    console.log(props.selected, index);
+    const isFocus = props.selected == index
+      ? true
+      : false;
+    console.log(isFocus);
+    return (<ProductRow focus={isFocus} product={product} key={product.id} dispatch={props.dispatch} handleKeyDown={props.handleKeyDown} handleOnFocus={handleOnFocus}/>)
   });
   return (
     <div>
@@ -108,7 +121,7 @@ function ProductRow(props) {
         value: props.product.time,
         id: props.product.id
       }}/>
-      <EditableCell dispatch={props.dispatch} handleKeyDown={props.handleKeyDown} handleOnFocus={props.handleOnFocus} cellData={{
+      <EditableCell focus={props.focus} dispatch={props.dispatch} handleKeyDown={props.handleKeyDown} handleOnFocus={props.handleOnFocus} cellData={{
         type: "note",
         value: props.product.note,
         id: props.product.id
@@ -124,8 +137,7 @@ function ProductRow(props) {
 function EditableCell(props) {
   return (
     <td>
-      <input type='text' id={props.cellData.id} value={props.cellData.value} name={props.cellData.type}
-         onBlur ={(evt) => {
+      <input autoFocus type='text' id={props.cellData.id} value={props.cellData.value} name={props.cellData.type} onBlur ={(evt) => {
         evt.preventDefault();
         props.dispatch({type: 'DESELECT_ROW'})
       }} onFocus ={(evt) => {
@@ -145,7 +157,15 @@ function EditableCell(props) {
             value: evt.target.value
           }
         })
-      }}/>
+      }} ref={function(input) {
+        if (input != null) {
+          console.log(props);
+          if (props.focus == true) {
+            input.focus();
+          }
+        }
+      }}
+      />
     </td>
   );
 

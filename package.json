@@ -164,7 +164,7 @@
     "fs": "0.0.1-security",
     "jquery": "^3.1.1",
     "nedb": "^1.8.0",
-    "react": "^15.4.1",
+    "react": "^15.4.2",
     "react-dom": "^15.4.1",
     "react-native-vector-icons": "^3.0.0",
     "react-redux": "^4.4.6",

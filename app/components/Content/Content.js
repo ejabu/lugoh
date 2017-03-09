@@ -35,24 +35,22 @@ export default class Content extends Component {
     shortcuts: React.PropTypes.object.isRequired
   }
   _handleShortcuts = (action, event) => {
-    console.log('action');
-    console.log(action);
     const { dispatch } = this.props;
-    console.log(event);
       switch (action) {
+        case 'ENTER':
+          dispatch({
+            type: 'NEXT_ROW',
+          })
+          break
         case 'MOVE_LEFT':
-          console.log('moving left')
           toPlay(dispatch)
           break
         case 'MOVE_RIGHT':
           toStop(dispatch)
-          console.log('moving right')
           break
         case 'MOVE_UP':
-          console.log('moving up')
           break
         case 'COPY':
-          console.log('copying stuff')
           break
       }
     }
