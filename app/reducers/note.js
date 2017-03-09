@@ -69,6 +69,8 @@ export function filter (state = "", action) {
 export function selected (state = 0, action) {
   if (action.type == "SELECT_ROW") {
     return action.index;
+  } else if (action.type == "DESELECT_ROW") {
+    return -1;
   } else {
     return state;
   }

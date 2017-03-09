@@ -1,11 +1,10 @@
 // @flow
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router';
 import styles from './Note.css';
 
-
-@connect(state => ({ playback: state.playback, note: state.note, filter: state.filter, selected: state.selected}),)
+@connect(state => ({playback: state.playback, note: state.note, filter: state.filter, selected: state.selected}),)
 export default class Note extends Component {
   constructor(props) {
     super(props);
@@ -15,45 +14,31 @@ export default class Note extends Component {
   }
   renderRow(item, index) {
     return (
-      <div key={index}>
-
-
-      </div>
+      <div key={index}></div>
 
     );
   }
 
   handleKeyDown = (event) => {
-    console.log('tes');
     if (event.key === 'Enter') {
       if (event.target.value !== '') {
         if (event.target.value.indexOf(':') > -1) {
           this.props.searchCallback(event.target.value)
-        }
-        else{
+        } else {
           var neQuery = QueryParser(event.target.value)
-          // quranDB.find(neQuery).sort({c:1,v:1}).exec(this.doSomething)
         }
       }
     }
   }
 
   render() {
-    const { note, filter,selected, dispatch } = this.props;
-    console.log("rerede");
-    console.log(note, filter, selected);
+    const {note, filter, selected, dispatch} = this.props;
     return (
       <div className={styles.transWrapper}>
-        Note Starts here
-        {selected}
+        Note Starts here {selected}
         <SearchBar filterText={filter} dispatch={dispatch}/>
 
-        <ProductTable
-          products={note}
-          filterText={filter}
-          dispatch={dispatch}
-          handleKeyDown={this.handleKeyDown}
-        />
+        <ProductTable products={note} filterText={filter} dispatch={dispatch} handleKeyDown={this.handleKeyDown}/>
       </div>
     );
   }
@@ -82,14 +67,7 @@ function ProductTable(props) {
     if (product.note.indexOf(filterText) === -1) {
       return;
     }
-    return (<ProductRow
-              product={product}
-              key={product.id}
-              dispatch={props.dispatch}
-              handleKeyDown={props.handleKeyDown}
-              handleOnFocus={handleOnFocus}
-
-            />)
+    return (<ProductRow product={product} key={product.id} dispatch={props.dispatch} handleKeyDown={props.handleKeyDown} handleOnFocus={handleOnFocus}/>)
   });
   return (
     <div>
@@ -99,7 +77,7 @@ function ProductTable(props) {
         obj: {
           id: (+ new Date() + Math.floor(Math.random() * 999999)).toString(36),
           note: "",
-          time: 0,
+          time: 0
         }
       })} className="btn btn-success pull-right">Add</button>
       <table className="table table-bordered">
@@ -125,20 +103,12 @@ function ProductRow(props) {
 
   return (
     <tr className="eachRow">
-      <EditableCell
-        dispatch={props.dispatch}
-        handleKeyDown={props.handleKeyDown}
-        handleOnFocus={props.handleOnFocus}
-        cellData={{
+      <EditableCell dispatch={props.dispatch} handleKeyDown={props.handleKeyDown} handleOnFocus={props.handleOnFocus} cellData={{
         "type": "time",
         value: props.product.time,
         id: props.product.id
       }}/>
-      <EditableCell
-        dispatch={props.dispatch}
-        handleKeyDown={props.handleKeyDown}
-        handleOnFocus={props.handleOnFocus}
-        cellData={{
+      <EditableCell dispatch={props.dispatch} handleKeyDown={props.handleKeyDown} handleOnFocus={props.handleOnFocus} cellData={{
         type: "note",
         value: props.product.note,
         id: props.product.id
@@ -155,23 +125,18 @@ function EditableCell(props) {
   return (
     <td>
       <input type='text' id={props.cellData.id} value={props.cellData.value} name={props.cellData.type}
-         onKeyDown ={(evt) => {
-           evt.preventDefault()
-           console.log('tez');
-         }}
-         onFocus ={(evt) => {
-
-
-           props.handleOnFocus({
-             obj: {
-               id: evt.target.id,
-
-             }})
-
-         }}
-        onChange ={(evt) => {
-          evt.preventDefault()
-          console.log('tez2');
+         onBlur ={(evt) => {
+        evt.preventDefault();
+        props.dispatch({type: 'DESELECT_ROW'})
+      }} onFocus ={(evt) => {
+        evt.preventDefault();
+        props.handleOnFocus({
+          obj: {
+            id: evt.target.id
+          }
+        })
+      }} onChange ={(evt) => {
+        evt.preventDefault();
         props.dispatch({
           type: 'UPDATE_PRODUCT',
           obj: {
@@ -180,8 +145,7 @@ function EditableCell(props) {
             value: evt.target.value
           }
         })
-      }}
-      />
+      }}/>
     </td>
   );
 
