@@ -40,7 +40,6 @@ export default class Note extends Component {
   }
   render() {
     const {note, filter, selected, dispatch} = this.props;
-    console.log('RERENDER');
     return (
       <div className={styles.transWrapper}>
         Note Starts here {selected}
@@ -75,11 +74,9 @@ function ProductTable(props) {
     if (product.note.indexOf(filterText) === -1) {
       return;
     }
-    console.log(props.selected, index);
     const isFocus = props.selected == index
       ? true
       : false;
-    console.log(isFocus);
     return (<ProductRow focus={isFocus} product={product} key={product.id} dispatch={props.dispatch} handleKeyDown={props.handleKeyDown} handleOnFocus={handleOnFocus}/>)
   });
   return (
@@ -87,11 +84,7 @@ function ProductTable(props) {
 
       <button type="button" onClick={() => props.dispatch({
         type: 'ADD_PRODUCT',
-        obj: {
-          id: (+ new Date() + Math.floor(Math.random() * 999999)).toString(36),
-          note: "",
-          time: 0
-        }
+
       })} className="btn btn-success pull-right">Add</button>
       <table className="table table-bordered">
         <thead>

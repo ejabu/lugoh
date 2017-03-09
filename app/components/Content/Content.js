@@ -11,8 +11,9 @@ import { ShortcutManager, Shortcuts } from 'react-shortcuts'
 const shortcutManager = new ShortcutManager(keymap)
 
 import { toPlay, toStop } from '../../actions/playback';
+import { nextRow, prevRow } from '../../actions/note';
 
-@connect(state => ({ playback: state.playback}),)
+@connect(state => ({ playback: state.playback, note: state.note, selected: state.selected}),)
 export default class Content extends Component {
 
 
@@ -35,12 +36,15 @@ export default class Content extends Component {
     shortcuts: React.PropTypes.object.isRequired
   }
   _handleShortcuts = (action, event) => {
-    const { dispatch } = this.props;
+    const { dispatch, note, selected } = this.props;
       switch (action) {
-        case 'ENTER':
-          dispatch({
-            type: 'NEXT_ROW',
-          })
+        case 'PREV_ROW':
+
+          prevRow(dispatch,selected, )
+
+          break
+        case 'NEXT_ROW':
+          nextRow(dispatch, note, selected, )
           break
         case 'MOVE_LEFT':
           toPlay(dispatch)

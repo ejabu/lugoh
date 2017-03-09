@@ -37,7 +37,12 @@ var productList = [
 
 export function note ( state = productList, action) {
    if (action.type == "ADD_PRODUCT") {
-  	  return state.concat([action.obj])
+     var toAdd = {
+       id: (+ new Date() + Math.floor(Math.random() * 999999)).toString(36),
+       note: "",
+       time: 0
+     }
+  	  return state.concat([toAdd])
    } else if (action.type == "DELETE_PRODUCT") {
     	var index = state.indexOf(action.obj);
       var new_state = [
@@ -73,6 +78,8 @@ export function selected (state = -1, action) {
     return -1;
   } else if (action.type == "NEXT_ROW") {
     return state+1;
+  } else if (action.type == "PREV_ROW") {
+    return state-1;
   } else {
     return state;
   }
