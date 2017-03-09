@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import styles from './Content.css';
+import Note from '../Note/Note';
 
 import keymap from './keymap'
 import { ShortcutManager, Shortcuts } from 'react-shortcuts'
@@ -64,6 +65,7 @@ export default class Content extends Component {
                 handler = {this._handleShortcuts}
               >
                 <div>Make something amazing today</div>
+                <Note/>
               </Shortcuts>
       </div>
     );
