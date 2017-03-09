@@ -57,22 +57,25 @@ var productList = [
 
 export function note ( state = productList, action) {
    if (action.type == "ADD_PRODUCT") {
-  	return state.concat([action.obj])
+  	  return state.concat([action.obj])
    } else if (action.type == "DELETE_PRODUCT") {
-  	var index = state.indexOf(action.obj);
-  	state.splice(index, 1);
-  	return state;
+    	var index = state.indexOf(action.obj);
+      var new_state = [
+        ...state.slice(0, index),
+       ...state.slice(index + 1)
+      ];
+      return new_state;
    } else if (action.type == "UPDATE_PRODUCT") {
-  	return state.map((todo, index, arr) => {
-    	   if (arr[index].id.toString() === action.obj.id) {
-      	     let obj = {};
-      	     obj[action.obj.name] = action.obj.value;
-      	     return Object.assign({}, todo, obj);
-    	   }
-    	   return todo
-  	})
+    	return state.map((todo, index, arr) => {
+      	   if (arr[index].id.toString() === action.obj.id) {
+        	     let obj = {};
+        	     obj[action.obj.name] = action.obj.value;
+        	     return Object.assign({}, todo, obj);
+      	   }
+      	   return todo
+    	})
    } else {
-  	return state;
+  	  return state;
    }
 }
 export function filter (state = "", action) {

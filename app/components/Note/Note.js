@@ -24,6 +24,7 @@ export default class Note extends Component {
   }
   render() {
     const { note, filter, dispatch } = this.props;
+    console.log("rerede");
     console.log(note, filter);
     return (
       <div className={styles.transWrapper}>
